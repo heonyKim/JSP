@@ -1,0 +1,78 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<%@ include file="/include/nav.jsp"%>
+
+
+
+<!-- Contact Area -->
+<section class="contact_area">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-12">
+				<form class="row contact_form" action="/blog/user?cmd=join" method="POST" id="contactForm" onsubmit="return validateCheck()">
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="text" class="form-control" name="username" required="required" placeholder="아이디" maxlength="20">
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="password" class="form-control" id="password" name="password" required="required" placeholder="비밀번호" maxlength="20" >
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="password" class="form-control" id="passwordCheck" name="passwordCheck" required="required" placeholder="비밀번호 확인" maxlength="20">
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="email" class="form-control" name="email" required="required" placeholder="이메일" maxlength="40">
+						</div>
+					</div>
+
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="text" class="form-control" name="adress" id="adress" required="required" placeholder="주소" maxlength="40">
+						</div>
+					</div>
+
+
+					<div class="col-md-12 text-right">
+						<button type="submit" value="submit" class="btn submit_btn" >JOIN</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Contact Area -->
+<br>
+<br>
+
+	<script>
+		function validateCheck(){
+			
+			var password = document.querySelector('#password').value; 
+			var passwordCheck = document.querySelector('#passwordCheck').value;
+			
+			if(password===passwordCheck){
+				console.log("비밀번호가 동일합니다");
+				return true;
+			}else{
+				console.log("비밀번호 틀림");
+				alert("비밀번호를 다시확인하세요");
+				return false;
+			}
+			
+		}
+	</script>
+
+
+<%@ include file="/include/footer.jsp"%>

@@ -1,0 +1,134 @@
+package com.cos.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.cos.model.User;
+import com.cos.util.DBClose;
+
+public class UserDao {
+	// 싱글톤으로 만들어야 하는데 그냥 함
+
+	private Connection conn; // 연결
+	private PreparedStatement pstmt; // SQL문 작성
+	private ResultSet rs; // 커서
+
+	public User findByUsername(String username) {
+
+		final String SQL = "SELECT * FROM user WHERE username = ?";
+
+		conn = DBConn.getConnection();
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, username);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("id"));
+				user.setUsername(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				user.setCreateDate(rs.getTimestamp("createDate"));
+
+				return user;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+
+		return null;
+
+	}
+
+	public int save(User user) {
+
+		conn = DBConn.getConnection();
+
+		final String SQL = "INSERT IGNORE INTO user values(null, ?, ?, ?,now(), ?)";
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getUsername());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getEmail());
+			pstmt.setString(4, user.getAddress());
+			int result = pstmt.executeUpdate();
+			return result;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+
+		return -1;
+	}
+
+	public int update(User user) {
+
+		conn = DBConn.getConnection();
+
+		final String SQL = "UPDATE user SET password=?, address=? WHERE id=?";
+
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getAddress());
+			pstmt.setInt(3, user.getId());
+			int result = pstmt.executeUpdate();
+			return result;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+
+		return -1;
+	}
+
+	/*
+	 * 로그인인증 return 1 : 성공 return 0 : 미인증 return -1: DB오류
+	 * 
+	 */
+	public int findByUsernameAndPassword(String username, String password) {
+
+		// DB연결
+		conn = DBConn.getConnection();
+
+		// count(id) 라고 쓰면, 해당조건으로 select시 만족하면 1의 값이 나옴
+		final String SQL = "select count(id) from user where username = ? and password = ?";
+
+		try {
+			// 쿼리 작성
+			pstmt = conn.prepareStatement(SQL);
+
+			// 쿼리 완성
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				int result = rs.getInt(1);
+				return result;
+			}
+
+		} catch (Exception e) {
+			System.out.println("아이디 또는 비밀번호 오류");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+
+		return -1;
+
+	}
+
+}

@@ -1,0 +1,41 @@
+package com.cos.util;
+
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.cos.model.Board;
+
+public class Utils {
+
+	public static void getPreviewContent(List<Board> boards) {
+		
+		
+		for(Board board : boards) {
+			
+			Document doc = Jsoup.parse(board.getContent());	//원하는 String을 HTML 형식으로 문서화
+			Elements ets = doc.select("img");
+			
+			if(ets!=null) {
+				for (Element et : ets) {
+					et.remove();
+				}
+			}
+			board.setContent(doc.toString());
+		}
+
+	}
+	
+	
+	//미리보기 이미지 가져오기
+	
+	public static String getPreviewImg() {
+		
+		return null;
+		
+	}
+	
+}

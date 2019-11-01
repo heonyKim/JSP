@@ -1,0 +1,24 @@
+package com.cos.util;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.junit.jupiter.api.Test;
+
+public class Utils {
+
+	public static String getPreviewContent(String content) {
+		
+		Document doc = Jsoup.parse(content);	//원하는 String을 HTML 형식으로 문서화
+		Elements ets = doc.select("img");
+		
+		if(ets!=null) {
+			for (Element et : ets) {
+				et.remove();
+			}
+		}
+		return doc.toString();
+	}
+	
+}
