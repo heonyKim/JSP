@@ -12,11 +12,24 @@
 
 			<div class="col-lg-12">
 				<form class="row contact_form" action="/blog/user?cmd=join" method="POST" id="contactForm" onsubmit="return validateCheck()">
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="form-group">
-							<input type="text" class="form-control" name="username" required="required" placeholder="아이디" maxlength="20">
+							<input type="text" class="form-control" id="username" name="username" required="required" placeholder="아이디" maxlength="20">
 						</div>
 					</div>
+					<div class="col-md-6">
+						<!-- ID OVERLAP CHECK -->
+						<div class="col-md-6">
+							<div class="form-group float-right">
+								<a class="blog_btn" href="#" onClick="usernameCheck()" style="font-size: 10pt;">중복확인</a>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<span id="username_input"></span>
+						</div>
+						<!-- ID OVERLAP CHECK -->
+					</div>
+
 
 					<div class="col-md-12">
 						<div class="form-group">
@@ -37,17 +50,17 @@
 					</div>
 
 
-					<div class="col-md-12">
-						<div class="form-group float-right">
-							<a class="blog_btn" href="#" onClick="goPopup();">주소찾기</a>
-						</div>
-					</div>
-					<div class="col-md-12">
+
+					<div class="col-md-10">
 						<div class="form-group">
 							<input type="text" class="form-control" name="address" id="roadFullAddr" required="required" placeholder="주소영역" maxlength="60" readonly>
 						</div>
 					</div>
-
+					<div class="col-md-2">
+						<div class="form-group float-right">
+							<a class="blog_btn" href="#" onClick="goPopup();" style="font-size: 10pt;">주소찾기</a>
+						</div>
+					</div>
 
 					<div class="col-md-12 text-right">
 						<button type="submit" value="submit" class="btn submit_btn">JOIN</button>
@@ -78,9 +91,6 @@
 	}
 
 	
-	
-	
-	
 	function validateCheck() {
 
 		var password = document.querySelector('#password').value;
@@ -96,6 +106,36 @@
 		}
 
 	}
+	
+	
+	//아이디 중복확인
+	<!-- ID OVERLAP CHECK -->
+	var usernameDuplicateCheck = false;
+	function usernameCheck(){
+		
+		var username = document.querySelector("#username").value; //적은 아이디값 받기
+		var et = document.querySelector("#username_input");
+		
+		fetch("/blog/api/user?username="+username).then(function(r){
+			return r.text();
+		}).then(function(r){
+			
+			var status = r;
+			
+			console.log(status);
+			if(status ==="ok"){
+				et.innerHTML = "<font style='color:green; font-weight:bold; font-size:8pt;'>사용할 수 있는 아이디 입니다.</font>";
+				usernameDuplicateCheck = true;
+			}else{
+				et.innerHTML = "<font style='color:red; font-weight:bold;font-size:8pt;'>사용할 수 없는 아이디 입니다.</font>";
+				usernameDuplicateCheck = false;
+			}
+		});
+		
+	}
+	<!-- ID OVERLAP CHECK -->
+	
+	
 </script>
 
 

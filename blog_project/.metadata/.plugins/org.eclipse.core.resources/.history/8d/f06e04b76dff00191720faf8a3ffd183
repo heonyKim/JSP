@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<button type=button onClick="sendPost2()">Post 요청</button>
+	<button type=button onClick="sendPost3()">Get 요청</button>
+	
+	<script>
+	
+	let postNum2 = 0;
+	let postNum3 = 0;
+	let sum = 0;
+	
+	function sendPost2() {
+		var xhttp = new XMLHttpRequest();
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				postNum2 = this.responseText;
+				console.log("postNum2 : "+postNum2);
+			}
+		};
+		
+		xhttp.open("POST", "http://localhost:8000/blog/test2", true);
+		xhttp.setRequestHeader("Content-type","text/plain");	//MIME타입
+		xhttp.send();
+	}
+	
+	
+	
+	function sendPost3() {
+		var xhttp = new XMLHttpRequest();
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				postNum3 = this.responseText;;
+				console.log("postNum3 : "+postNum3);
+			}
+		};
+		
+		xhttp.open("POST", "http://localhost:8000/blog/test2", true);
+		xhttp.setRequestHeader("Content-type","text/plain");	//MIME타입					//GET방식은 serRequestHeader가 의미가 없음
+		xhttp.send();
+	}
+	
+	</script>
+
+</body>
+</html>

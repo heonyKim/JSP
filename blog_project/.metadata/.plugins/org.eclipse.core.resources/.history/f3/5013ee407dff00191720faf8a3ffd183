@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Fetch API 사용하기 - promise</h1>
+
+	<button onClick="sum()">버튼</button>
+
+
+	<script>
+		function getNum1() {
+
+			/* fetch("url",{method:"POST"}).then(),then(); */
+
+			fetch("http://localhost:8000/blog/test2", {
+				method : "POST"
+			}).then(function(d) {
+				return d.text();
+				//return d.json();
+			}).then(function(d) {
+				console.log(d);
+			});
+
+		}
+
+		function getNum2() {
+			/* fetch("url",{method:"POST"}).then(),then(); */
+
+			fetch("http://localhost:8000/blog/test2", {
+				method : "POST"
+			}).then(function(d) {
+				return d.text();
+				//return d.json();
+			}).then(function(d) {
+				console.log(d);
+			});
+		}
+	</script>
+
+
+
+</body>
+</html>

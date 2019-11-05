@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<button type=button onClick="sendPost()">Post 요청</button>
+	<button type=button onClick="sendGet()">Get 요청</button>
+	
+	<script>
+	
+	let postNum = 0;
+	let getNum = 0;
+	let sum = 0;
+	
+	function sendPost() {
+		var xhttp = new XMLHttpRequest();
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				postNum = 100;
+			}
+		};
+		
+		xhttp.open("POST", "http://localhost:8000/blog/test2", true);
+		xhttp.setRequestHeader("Content-type","text/plain");	//MIME타입
+		xhttp.send();
+	}
+	
+	
+	
+	function sendGet() {
+		var xhttp = new XMLHttpRequest();
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				getNum = 100;
+			}
+		};
+		
+		xhttp.open("GET", "http://localhost:8000/blog/test2", true);
+		
+		xhttp.send();
+	}
+	
+	</script>
+
+</body>
+</html>

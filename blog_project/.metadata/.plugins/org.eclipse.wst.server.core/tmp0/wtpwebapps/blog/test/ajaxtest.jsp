@@ -25,7 +25,7 @@
 		}
 		
 		console.log(reply);
-		var replyString=JSON.stringify(reply);
+		var replyString=JSON.stringify(reply);	//JSON문자열로 변환
 		console.log(replyString);
 
 		function loadDoc() {
@@ -41,7 +41,7 @@
 				}
 			};
 			xhttp.open("POST", "http://localhost:8000/blog/test", true);
-			xhttp.setRequestHeader("Content-type","application:json");
+			xhttp.setRequestHeader("Content-type","application:json");	//MIME타입
 			xhttp.send(replyString);
 		}
 	</script>
